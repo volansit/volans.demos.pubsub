@@ -9,6 +9,9 @@ var rabbitMq = builder.AddRabbitMQ("eventbus", password: rabbitmqPassword)
     .WithManagementPlugin()
     .WithLifetime(ContainerLifetime.Persistent);
 
+var apiService = builder.AddProject<Projects.PubSub_ApiService>("apiservice")
+    .WithReference(rabbitMq);
+
 builder.AddProject<RabbitConsumer>("RabbitMQConsumer")
     .WithReference(rabbitMq).WaitFor(rabbitMq);
 /*

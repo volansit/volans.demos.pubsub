@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>volans.demos.pubsub.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <AssemblyName>volans.demos.pubsub.$(MSBuildProjectName)</AssemblyName>
+  </PropertyGroup>
+
+</Project>

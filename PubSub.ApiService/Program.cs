@@ -1,8 +1,13 @@
+using RabbitMQ.Client;
+using System.Text.Json;
+using volans.demos.pubsub.Common;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
 
+builder.AddRabbitMQClient("eventbus");
 // Add services to the container.
 builder.Services.AddProblemDetails();
 
@@ -34,6 +39,26 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast");
+
+app.MapGet("/send-message", (IConnection messageConnection, IConfiguration configuration) =>
+{
+    const string configKeyName = "RabbitMQ:QueueName";
+    string? queueName = configuration[configKeyName];
+
+    using var channel = messageConnection.CreateModel();
+    channel.QueueDeclare(queueName, exclusive: false);
+    channel.BasicPublish(
+        exchange: "",
+        routingKey: queueName,
+        basicProperties: null,
+        body: JsonSerializer.SerializeToUtf8Bytes(new OrderModel
+        {
+            Name = $"Message from API: {Guid.NewGuid()}",
+            Amount = 1000
+        }));
+
+    return Results.Ok("message sent");
+});
 
 app.MapDefaultEndpoints();
 
