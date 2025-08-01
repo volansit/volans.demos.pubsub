@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PubSub.ApiService\PubSub.ApiService.csproj" />
     <ProjectReference Include="..\PubSub.Web\PubSub.Web.csproj" />
+    <ProjectReference Include="..\RabbitConsumer2\RabbitSubscriber.csproj" />
     <ProjectReference Include="..\RabbitConsumer\RabbitConsumer.csproj" />
   </ItemGroup>
 

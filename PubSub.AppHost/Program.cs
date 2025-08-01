@@ -14,6 +14,14 @@ var apiService = builder.AddProject<Projects.PubSub_ApiService>("apiservice")
 
 builder.AddProject<RabbitConsumer>("RabbitMQConsumer")
     .WithReference(rabbitMq).WaitFor(rabbitMq);
+
+builder.AddProject<RabbitSubscriber>("RabbitSubscriber1")
+    .WithReference(rabbitMq).WaitFor(rabbitMq);
+
+builder.AddProject<RabbitSubscriber>("RabbitSubscriber2")
+    .WithReference(rabbitMq).WaitFor(rabbitMq);
+
+
 /*
  * removed pre added references
 var cache = builder.AddRedis("cache");
